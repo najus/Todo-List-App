@@ -13,8 +13,10 @@ $stmt->execute ( array (
 ) );
 $user = $stmt->fetch ();
 if ($user) {
-	$_SESSION ['username'] = $name;
-	$_SESSION ['matches'] = $entries;
+	$_SESSION ['username'] = $username;
+	$_SESSION ['email'] = $user ['email'];
+	$_SESSION ['user_id'] = $user ['user_id'];
+	$_SESSION ['created_date'] = $user ['created_date'];
 	header ( "Location: home.php" );
 } else {
 	$_SESSION ['error'] = "Incorrect username or password";
