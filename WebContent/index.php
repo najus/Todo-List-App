@@ -8,31 +8,36 @@ if (isset ( $_SESSION ['error'] )) {
 	unset ( $_SESSION ['error'] );
 }
 ?>
-
 <div class="container">
-	<h1>Todo list app</h1>
-</div>
-<form action="login-submit.php" method="POST">
-	<fieldset>
-		<legend>Login:</legend>
+	<div class="row">
+		<div class="col-lg-12">
+			<h1>Todo list app</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<form action="login-submit.php" method="POST">
+				<fieldset>
+					<legend>Login:</legend>
 		<?php if ($error): ?>
         	<div><?= $error ?></div>
     	<?php endif; ?>
 		<p>
-			<span class="column">Username:</span> <input type="text" size="16"
-				name="username" />
-		</p>
-		<p>
-			<span class="column">Password:</span> <input type="password"
-				size="16" name="password" />
-		</p>
-		<p>
-			<input type="submit" value="Submit" />
-		</p>
-	</fieldset>
-
-</form>
-
+						<span class="column">Username:</span> <input type="text" size="16"
+							name="username" />
+					</p>
+					<p>
+						<span class="column">Password:</span> <input type="password"
+							size="16" name="password" />
+					</p>
+					<p>
+						<input type="submit" value="Submit" />
+					</p>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>
 <?php
 require ("bottom.html");
 ?>
