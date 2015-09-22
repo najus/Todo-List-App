@@ -8,7 +8,7 @@ if (isset ( $_SESSION ['error'] )) {
 	unset ( $_SESSION ['error'] );
 }
 ?>
-<div class="container">
+<div class="container text-center pagination-centered">
 	<div class="row">
 		<div class="col-lg-12">
 			<h1>Todo list app</h1>
