@@ -27,9 +27,9 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="bootstrap/listgroup.css" rel="stylesheet" type="text/css"/>
-        <script src="bootstrap/js/bootstrap.js" type="text/javascript"></script>
         <script src="scripts/jquery-2.1.4.min.js" type="text/javascript"></script>
-        <script src="bootstrap/listgroup.js" type="text/javascript"></script>
+        <script src="bootstrap/js/bootstrap.js" type="text/javascript"></script>
+        <script src="scripts/todo.js" type="text/javascript"></script>
     </head>
     <body>
         <div class="container">
@@ -82,7 +82,7 @@ and open the template in the editor.
                             <?php foreach($posts as $post): ?>
                                 <li class="list-group-item titleBox" id="<?= $post["item_id"] ?>">                            
                                     <label id="item-<?= $post["item_id"] ?>"><?= $post["item_text"] ?></label>
-                                    <div class="pull-right action-buttons">
+                                    <div class="pull-right action-buttons" id="action-buttons-<?= $post["item_text"] ?>">
                                         <a id="editList-<?= $post["item_id"] ?>"><span class="glyphicon glyphicon-pencil"></span></a>
                                         <a id="deleteList-<?= $post["item_id"] ?>" class="trash"><span class="glyphicon glyphicon-trash"></span></a>
                                         <a id="markList-<?= $post["item_id"] ?>" class="flag"><span class="glyphicon glyphicon-ok"></span></a>
