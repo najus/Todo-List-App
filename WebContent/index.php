@@ -21,21 +21,25 @@ if (isset ( $_SESSION ['error'] )) {
 				<fieldset>
 					<legend>Login:</legend>
 		<?php if ($error): ?>
-        	<div><?= $error ?></div>
+        	<div class="highlight"><?= $error ?></div>
     	<?php endif; ?>
-		<p>
-						<span class="column">Username:</span> <input type="text" size="16"
-							name="username" />
-					</p>
-					<p>
-						<span class="column">Password:</span> <input type="password"
-							size="16" name="password" />
-					</p>
-					<p>
-						<input type="submit" value="Submit" />
-					</p>
-					<p>
-						<a href="SignUp.html">Please click here to sign up if already not a member!!</a>
+    	<div class="row">
+						<div class="col-md-4 col-md-offset-4">
+							<p>
+								<span class="column">Username:</span> <input type="text"
+									size="16" name="username" />
+							</p>
+							<p>
+								<span class="column">Password:</span> <input type="password"
+									size="16" name="password" />
+							</p>
+							<p>
+								<input type="submit" class="btn btn-success" value="Submit" />
+							</p>
+						</div>
+					</div>
+					<p class="signup">
+						<a href="signup.php">Sign up</a>
 					</p>
 				</fieldset>
 			</form>
