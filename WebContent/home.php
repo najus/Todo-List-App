@@ -1,6 +1,5 @@
 <?php
 session_start ();
-require ("top.html");
 require ("posts.php");
 
 if (isset ( $_SESSION ['username'] )) {
@@ -13,6 +12,7 @@ if (isset ( $_SESSION ['username'] )) {
 	header ( "Location: index.php" );
 	exit ();
 }
+require ("top.html");
 ?>
 <div class="container text-center pagination-centered">
 	<div class="col-lg-12">
@@ -37,7 +37,7 @@ if (isset ( $_SESSION ['username'] )) {
 			} else {
 				echo "user";
 			}
-			?>"><?php echo ($post['item_text']);
+			?>" id="post-<?= $post['item_id'] ?>"><?php echo ($post['item_text']);
 			$comments = getAllComments($post['item_id']);
 			foreach ($comments as $comment):
 			?>
@@ -49,10 +49,10 @@ if (isset ( $_SESSION ['username'] )) {
 			} else {
 				echo "user";
 			}
-			?>"><?= $comment['comment_text'] ?></div>
+			?>" id="comment-<?= $comment['comment_id'] ?>"><?= $comment['comment_text'] ?></div>
 			</div>
 			<?php endforeach;?>
-			<input type="text" /><button class="btn-primary add-post-height">+ Comment</button>
+			<input id="new-comment-<?= $post['item_id'] ?>" type="text" /><button class="btn-primary add-post-height btn-comment" id="<?= $post['item_id'] ?>">+ Comment</button>
 			</div>
 		</div>
 	<?php endforeach;?>
