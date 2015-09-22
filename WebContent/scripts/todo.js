@@ -4,6 +4,7 @@ $(function() {
 	$(document).ready(function() {
 		$("body").on("click", "#btnSaveTodo", function() {
 			var postData = $("#txtNewTodo").val();
+			$("#txtNewTodo").val("");
 			$.post("addpost.php", {
 				"newpost" : postData,
 				"dataType" : "json"
@@ -65,8 +66,8 @@ $(function() {
 
 		var postActionDiv = $("<div>").attr({"class": "pull-right action-buttons", "id": "action-buttons-" + post_id});
 		var editList = $("<a>").attr({"id": "editList-" + post_id}).append($("<span>").attr({"class": "glyphicon glyphicon-pencil"}));
-		var deleteList = $("<a>").attr({"id": "deleteList-" + post_id}).append($("<span>").attr({"class": "glyphicon glyphicon-trash"}));
-		var markList = $("<a>").attr({"id": "markList-" + post_id}).append($("<span>").attr({"class": "glyphicon glyphicon-ok"}));
+		var deleteList = $("<a>").attr({"id": "deleteList-" + post_id, "class": "trash"}).append($("<span>").attr({"class": "glyphicon glyphicon-trash"}));
+		var markList = $("<a>").attr({"id": "markList-" + post_id, "class": "flag"}).append($("<span>").attr({"class": "glyphicon glyphicon-ok"}));
 		postActionDiv.append(editList).append(deleteList).append(markList);
 		rootLi.append(postActionDiv);
 
