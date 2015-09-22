@@ -8,6 +8,7 @@ if (isset ( $_SESSION ['error'] )) {
 	unset ( $_SESSION ['error'] );
 }
 ?>
+
 <div class="container text-center pagination-centered">
 	<div class="row">
 		<div class="col-lg-12">
@@ -32,6 +33,9 @@ if (isset ( $_SESSION ['error'] )) {
 					</p>
 					<p>
 						<input type="submit" value="Submit" />
+					</p>
+					<p>
+						<a href="SignUp.html">Please click here to sign up if already not a member!!</a>
 					</p>
 				</fieldset>
 			</form>
