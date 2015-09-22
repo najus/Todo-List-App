@@ -6,7 +6,6 @@ $postData = filter_input ( INPUT_POST, 'newpost' );
 $userId = $_SESSION ['user_id'];
 $currentDate = date ( 'Y-m-d' );
 
-
 $stmt = $db->prepare ( "Insert into todolist values(NULL, :post, :itemdone, :userid, :createddate)" );
 $status = $stmt->execute ( array (
 		':post' => $postData,
@@ -15,6 +14,8 @@ $status = $stmt->execute ( array (
 		':createddate' => $currentDate 
 ) );
 
-print $postData;
+$posts = getAllPosts();
+// print_r($posts);
+echo json_encode($posts);
 
 ?>
