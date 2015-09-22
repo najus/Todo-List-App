@@ -17,7 +17,7 @@ if ($user) {
 	$_SESSION ['email'] = $user ['email'];
 	$_SESSION ['user_id'] = $user ['user_id'];
 	$_SESSION ['created_date'] = $user ['created_date'];
-	header ( "Location: home.php" );
+	header ( "Location: home1.php" );
 } else {
 	$_SESSION ['error'] = "Incorrect username or password";
 	header ( "Location: index.php" );
