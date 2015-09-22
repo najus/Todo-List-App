@@ -9,3 +9,16 @@
 .add-post-height {
 	height: 28px;
 }
+
+input[type='text'], input[type='password'], input[type='email'] {
+	width: 66%;
+	float: right;
+}
+
+.signup {
+	text-align: center;
+}
+
+.highlight {
+	color: #FF3300;	
+}
