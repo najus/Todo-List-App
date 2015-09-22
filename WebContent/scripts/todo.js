@@ -10,7 +10,7 @@ $(function() {
 	});
 
 	$(document).ready(function() {
-		$(".btn-comment").click(function() {
+		$("body").on("click", ".btn-comment", function() {
 			var postComment = $("#new-comment-" + this.id).val();
 			$.post("addcomment.php", {
 				"newcomment" : postComment,
