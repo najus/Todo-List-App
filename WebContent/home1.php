@@ -102,14 +102,14 @@ and open the template in the editor.
 	                                            </li>
                                         	<? endforeach; ?>
                                         </ul>
-                                        <form class="form-inline" role="form">
+                                        <div class="form-inline">
                                             <div class="form-group">
                                                 <input class="form-control" id="form-control-<?= $post["item_id"] ?>" type="text" placeholder="Your comments" />
                                             </div>
                                             <div class="form-group">
                                                 <button class="btn btn-success" id="btn-<?= $post["item_id"] ?>">Add</button>
                                             </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </li>
                             <? endforeach; ?>

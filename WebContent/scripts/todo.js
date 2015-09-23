@@ -13,11 +13,14 @@ $(function() {
 	});
 
 	$(document).ready(function() {
-		$("body").on("click", ".btn-comment", function() {
-			var postComment = $("#new-comment-" + this.id).val();
+		$("body").on("click", "button", function() {
+			var inputCommentId = this.id.split("-")[1];
+			var postComment = $("#form-control-" + inputCommentId).val();
+			$("#form-control-" + inputCommentId).val("");
+			
 			$.post("addcomment.php", {
 				"newcomment" : postComment,
-				"postid" : this.id,
+				"postid" : inputCommentId,
 				"dataType" : "json"
 			}).done(successfulComment).fail(failedComment);
 		});
@@ -25,13 +28,26 @@ $(function() {
 	
 	function successfulComment(data) {
 		var d = jQuery.parseJSON(data);
-		var postDiv = $("#post-" + d[d.length - 1]['item_id']);
+		var comment = d[d.length - 1];
+		var comment_id = comment["comment_id"];
+		var post_id = comment["item_id"];
+
+		var rootLi = $("<li>");
+
+		var commentTextDiv = $("<div>").attr({"class": "commentText", "id": "commentText-" + comment_id});
+		var commentP = $("<p>").attr({"class": ""}).text(comment["comment_text"]);
+		var actionButtonDiv = $("<div>").attr({"class": "pull-right action-buttons"});
+
+		var editComment = $("<a>").attr({"id": "editComment-" + comment_id}).append($("<span>").attr({"class": "glyphicon glyphicon-pencil"}));
+		var deleteComment = $("<a>").attr({"id": "deleteComment-" + comment_id, "class": "trash"}).append($("<span>").attr({"class": "glyphicon glyphicon-trash"}));
+		actionButtonDiv.append(editComment).append(deleteComment);
+
+		var authorSpan = $("<span>").attr({"class": "date sub-text"}).text("By " + comment["user_id"] + " on " + comment["created_date"]);
+
+		commentTextDiv.append(commentP).append(actionButtonDiv).append(authorSpan);
+		rootLi.append(commentTextDiv);
 		
-		var commentRootDiv = $("<div>").addClass("row comments");
-		var commentDiv = $("<div>").addClass("col-lg-6 admin").attr({'id': "comment-" + d[d.length - 1]['comment_id']}).text(d[d.length - 1]['comment_text']);
-		
-		commentRootDiv.append(commentDiv);
-		postDiv.append(commentRootDiv);
+		$("#commentList-" + post_id).append(rootLi);
 	}
 	
 	function failedComment(xhr, status, exception) {
@@ -39,21 +55,6 @@ $(function() {
 	}
 
 	function successfulPost(data) {
-//		var d = jQuery.parseJSON(data);
-//		var rootDiv = $("<div>");
-//		rootDiv.addClass("row posts");
-//		
-//		var postDiv = $("<div>").addClass("col-lg-12 admin").attr({'id': "post-" + d[0]['item_id']}).text(d[0]['item_text'] + " ");
-//		
-//		var input = $("<input>").attr({'id': "new-comment-" + d[0]['item_id'], 'type': 'text'});
-//		var button = $("<button>").text("+ Comment").addClass("btn-primary add-post-height btn-comment").attr({'id': d[0]['item_id']});
-//		
-//		rootDiv.append(postDiv);
-//		postDiv.append(input);
-//		postDiv.append(button);
-//		
-//		$("#posts").prepend(rootDiv);
-		
 		var post = jQuery.parseJSON(data)[0];
 		var post_id = post["item_id"];
 
@@ -73,7 +74,7 @@ $(function() {
 
 		var actionBoxDiv = $("<div>").attr({"class": "actionBox", "id": "actionBox-" + post_id});
 		var commentListUl = $("<ul>").attr({"class": "commentList", "id": "commentList-" + post_id});
-		var inlineForm = $("<form>").attr({"class": "form-inline", "role": "form"});
+		var inlineForm = $("<div>").attr({"class": "form-inline"});
 
 		var newCommentDiv = $("<div>").attr({"class": "form-group"}).append($("<input>").attr({"class": "form-control", "id": "form-control-" + post_id, "type": "text", "placeholder": "Your comments"}));
 		var addCommentDiv = $("<div>").attr({"class": "form-group"}).append($("<button>").attr({"class": "btn btn-success", "id": "btn-" + post_id}).text("Add"));
