@@ -32,6 +32,11 @@ and open the template in the editor.
         <script src="scripts/todo.js" type="text/javascript"></script>
     </head>
     <body>
+    	<div class="container text-center pagination-centered">
+			<div class="col-lg-12">
+				<h1>Todo List App</h1>
+			</div>
+		</div>
         <div class="container">
             <div class="row form-group">
                 <div class="col-md-10 col-lg-offset-1">
@@ -53,10 +58,7 @@ and open the template in the editor.
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <div class="col-md-2">
-                        <label>Filter By:</label>
-                    </div>
+                <div class="col-md-10 col-md-offset-4">
                     <div class="col-md-4">
                         <div class="btn-group btn-group-justified" role="group" aria-label="...">
                             <div class="btn-group" role="group">
