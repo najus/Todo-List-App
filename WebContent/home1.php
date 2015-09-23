@@ -35,6 +35,7 @@ and open the template in the editor.
     	<div class="container text-center pagination-centered">
 			<div class="col-lg-12">
 				<h1>Todo List App</h1>
+				<h2><span class="col-lg-offset-9"><a href="logout.php">Logout</a></span></h2>
 			</div>
 		</div>
         <div class="container">
