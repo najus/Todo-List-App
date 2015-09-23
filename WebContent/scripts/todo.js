@@ -153,8 +153,6 @@ $(function() {
 
 	function successfulPostDelete(data, status, xhr, deleteId) {
 		if (data === "1") {
-			// alert("Successfully deleted");
-			// $(this).fadeOut(500, function() { $("#" + deleteId).remove(); });
 			$("#" + deleteId).remove();
 		} else
 			alert("Cannot delete");
@@ -179,8 +177,6 @@ $(function() {
 
 	function successfulCommentDelete(data, status, xhr, deleteId) {
 		if (data === "1") {
-			// alert("Successfully deleted");
-			// $(this).fadeOut(500, function() { $("#" + deleteId).remove(); });
 			$("#commentText-" + deleteId).remove();
 		} else
 			alert("Cannot delete");
@@ -198,25 +194,21 @@ $(function() {
 				$.post("postdone.php", {
 					"postId" : postId
 				}).done(function(data, staus, xhr) {
-					successfulDonePost(data, status, xhr, deleteId);
+					successfulDonePost(data, status, xhr, postId);
 				}).fail(failedDonePost);
 			}
 		});
 	});
 
 
-	  function successfulDonePost(data, status, xhr, deleteId) {
-		alert(data);
+	  function successfulDonePost(data, status, xhr, postId) {
 		if (data === "1") {
-//			alert("Successfully deleted");
-			// $(this).fadeOut(500, function() { $("#" + deleteId).remove(); });
-			$("#markList-" + deleteId).remove();
+			$("#" + postId).remove();
 		} else
 			alert("Cannot mark it as done.");
 	}
 
 	function failedDonePost(xhr, status, exception) {
-		alert(status);
 		console.log(xhr, status, exception);
 	}
 });
