@@ -13,7 +13,7 @@ $(function() {
 	});
 
 	$(document).ready(function() {
-		$("body").on("click", "button", function() {
+		$("body").on("click", ".btn-success", function() {
 			var inputCommentId = this.id.split("-")[1];
 			var postComment = $("#form-control-" + inputCommentId).val();
 			$("#form-control-" + inputCommentId).val("");
@@ -26,9 +26,52 @@ $(function() {
 		});
 	});
 	
+	$(document).ready(function() {
+		$("body").on("click", ".btn-default", function() {
+			var btnId = this.id;
+			var url = "";
+			$(".list-group-item").remove();
+			$("#"+btnId).addClass("active");
+			if(btnId === "btnAllList") {
+				url = "allposts.php";
+				$("#btnMyList").removeClass("active");
+			}
+			else if(btnId === "btnMyList") {
+				$("#btnAllList").removeClass("active");
+				url = "myposts.php";
+			}
+			
+			$.post(url, {
+				"dataType": "json"
+			}).done(displayTodoList).fail(failedPost);
+		});
+	});
+	
+	function displayTodoList(data) {
+		var posts = jQuery.parseJSON(data);
+		$(posts.reverse()).each(function(){
+			addPost(this);
+			var postId = this["item_id"];
+			$.post("comments.php", {
+				"postId": postId
+			}).done(addAllComments).fail(failedComment);
+		});
+	}
+	
+	function addAllComments(data) {
+		var comments = jQuery.parseJSON(data);
+		$(comments).each(function() {
+			addComment(this);
+		});
+	}
+	
 	function successfulComment(data) {
 		var d = jQuery.parseJSON(data);
 		var comment = d[d.length - 1];
+		addComment(comment);
+	}
+	
+	function addComment(comment) {
 		var comment_id = comment["comment_id"];
 		var post_id = comment["item_id"];
 
@@ -56,6 +99,10 @@ $(function() {
 
 	function successfulPost(data) {
 		var post = jQuery.parseJSON(data)[0];
+		addPost(post);
+	}
+
+	function addPost(post) {
 		var post_id = post["item_id"];
 
 		var rootLi = $("<li>").attr({"class": "list-group-item titleBox", "id": post_id});
@@ -85,7 +132,7 @@ $(function() {
 
 		$(".list-group").prepend(rootLi);
 	}
-
+	
 	function failedPost(xhr, status, exception) {
 		console.log(xhr, status, exception);
 	}
@@ -104,11 +151,10 @@ $(function() {
 		});
 	});
 
-
-  function successfulPostDelete(data, status, xhr, deleteId) {
+	function successfulPostDelete(data, status, xhr, deleteId) {
 		if (data === "1") {
-//			alert("Successfully deleted");
-//			$(this).fadeOut(500, function() { $("#" + deleteId).remove(); });
+			// alert("Successfully deleted");
+			// $(this).fadeOut(500, function() { $("#" + deleteId).remove(); });
 			$("#" + deleteId).remove();
 		} else
 			alert("Cannot delete");
@@ -131,10 +177,9 @@ $(function() {
 		});
 	});
 
-
-	  function successfulCommentDelete(data, status, xhr, deleteId) {
+	function successfulCommentDelete(data, status, xhr, deleteId) {
 		if (data === "1") {
-//			alert("Successfully deleted");
+			// alert("Successfully deleted");
 			// $(this).fadeOut(500, function() { $("#" + deleteId).remove(); });
 			$("#commentText-" + deleteId).remove();
 		} else
