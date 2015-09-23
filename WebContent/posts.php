@@ -70,11 +70,12 @@ function deleteComment($comment_id, $user_id) {
 }
 function markTaskAsDone($post_id, $user_id) {
 	global $db;
-	$stmt_post = $db->prepare ( "UPDATE comments SET item_done = :item_done WHERE user_id = :user_id AND post_id = :post_id" );
+	$stmt_post = $db->prepare ( "UPDATE todolist SET item_done = :item_done WHERE user_id = :user_id AND item_id = :post_id" );
 	$stmt_post->execute ( array (
 			':item_done' => 1,
 			':user_id' => $user_id,
 			':post_id' => $post_id 
 	) );
+	return $stmt_post->rowCount();
 }
 ?>
