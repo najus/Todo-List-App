@@ -86,7 +86,7 @@ and open the template in the editor.
                                 <li class="list-group-item titleBox" id="<?= $post["item_id"] ?>">                            
                                     <label id="item-<?= $post["item_id"] ?>"><?= $post["item_text"] ?></label>
                                     <div class="pull-right action-buttons" id="action-buttons-<?= $post["item_text"] ?>">
-                                        <a id="editList-<?= $post["item_id"] ?>"><span class="glyphicon glyphicon-pencil"></span></a>
+                                        
                                         <a id="deleteList-<?= $post["item_id"] ?>" class="post-trash trash"><span class="glyphicon glyphicon-trash"></span></a>
                                         <a id="markList-<?= $post["item_id"] ?>" class="flag"><span class="glyphicon glyphicon-ok"></span></a>
                                     </div>
@@ -97,7 +97,7 @@ and open the template in the editor.
 	                                                <div class="commentText" id="commentText-<?= $comment["comment_id"]?>">
 	                                                    <p class=""><?= $comment["comment_text"] ?></p> 
 	                                                    <div class="pull-right action-buttons">
-	                                                        <a id="editComment-<?= $comment["comment_id"]?>"><span class="glyphicon glyphicon-pencil"></span></a>
+	                                                        
 	                                                        <a id="deleteComment-<?= $comment["comment_id"]?>" class="comment-trash trash"><span class="glyphicon glyphicon-trash"></span></a>
 	                                                    </div>
 	                                                    <span class="date sub-text">By <?= $comment["user_id"] ?> on <?= $comment["created_date"] ?></span>
