@@ -78,4 +78,14 @@ function markTaskAsDone($post_id, $user_id) {
 	) );
 	return $stmt_post->rowCount();
 }
+
+function getUser($user_id) {
+	global $db;
+	$stmt_user = $db->prepare ( "SELECT username FROM users WHERE user_id = :user_id" );
+	$stmt_user->execute ( array (
+			':user_id' => $user_id,
+	) );
+	$row =  $stmt_user->fetch();
+	return $row["username"];
+}
 ?>

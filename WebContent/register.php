@@ -6,7 +6,7 @@ $username = filter_input ( INPUT_POST, "name" );
 $password = filter_input ( INPUT_POST, "password" );
 $confirmpassword = filter_input ( INPUT_POST, "confirmpassword" );
 $email = filter_input ( INPUT_POST, "email" );
-$currentDate = date ( 'Y-m-d' );
+$currentDate = date ( 'Y-m-d H:i:s' );
 
 if (empty ( $username ) || empty ( $password ) || empty ( $confirmpassword ) || empty ( $email )) {
 	$_SESSION ['error'] = "Fields cannot be empty";

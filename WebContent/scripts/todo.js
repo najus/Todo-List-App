@@ -75,7 +75,7 @@ $(function() {
 		var comment_id = comment["comment_id"];
 		var post_id = comment["item_id"];
 
-		var rootLi = $("<li>");
+		var rootLi = $("<li>").attr({"id": "commentLi-" + comment_id});
 
 		var commentTextDiv = $("<div>").attr({"class": "commentText", "id": "commentText-" + comment_id});
 		var commentP = $("<p>").attr({"class": ""}).text(comment["comment_text"]);
@@ -84,12 +84,26 @@ $(function() {
 		var deleteComment = $("<a>").attr({"id": "deleteComment-" + comment_id, "class": "comment-trash trash"}).append($("<span>").attr({"class": "glyphicon glyphicon-trash"}));
 		actionButtonDiv.append(deleteComment);
 
-		var authorSpan = $("<span>").attr({"class": "date sub-text"}).text("By " + comment["user_id"] + " on " + comment["created_date"]);
+		var authorSpan = $("<span>").attr({"class": "date sub-text"});
+				
+		$.post("getuser.php", {
+			"userId" : comment["user_id"]
+		}).done(function(data, status, xhr) {
+			setAuthor(data, status, xhr, authorSpan, comment["created_date"]);
+		}).fail(userNotFound);
 
 		commentTextDiv.append(commentP).append(actionButtonDiv).append(authorSpan);
 		rootLi.append(commentTextDiv);
 		
 		$("#commentList-" + post_id).append(rootLi);
+	}
+	
+	function setAuthor(data, status, xhr, authorSpan, createdDate) {
+		authorSpan.text("By " + data + " on " + createdDate);
+	}
+	
+	function userNotFound(xhr, status, exception) {
+		console.log(xhr, status, exception);
 	}
 	
 	function failedComment(xhr, status, exception) {
@@ -175,7 +189,7 @@ $(function() {
 
 	function successfulCommentDelete(data, status, xhr, deleteId) {
 		if (data === "1") {
-			$("#commentText-" + deleteId).remove();
+			$("#commentLi-" + deleteId).remove();
 		} else
 			alert("Cannot delete");
 	}

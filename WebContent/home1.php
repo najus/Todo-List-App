@@ -96,14 +96,14 @@ and open the template in the editor.
                                     <div class="actionBox" id="actionBox-<?= $post["item_id"] ?>">
                                         <ul class="commentList" id="commentList-<?= $post["item_id"] ?>">
                                         	<? $comments = getAllComments($post["item_id"]); foreach ($comments as $comment): ?>
-	                                            <li>
+	                                            <li id="commentLi-<?= $comment["comment_id"]?>">
 	                                                <div class="commentText" id="commentText-<?= $comment["comment_id"]?>">
 	                                                    <p class=""><?= $comment["comment_text"] ?></p> 
 	                                                    <div class="pull-right action-buttons">
 	                                                        
 	                                                        <a id="deleteComment-<?= $comment["comment_id"]?>" class="comment-trash trash"><span class="glyphicon glyphicon-trash"></span></a>
 	                                                    </div>
-	                                                    <span class="date sub-text">By <?= $comment["user_id"] ?> on <?= $comment["created_date"] ?></span>
+	                                                    <span class="date sub-text">By <?= getUser($comment["user_id"]) ?> on <?= $comment["created_date"] ?></span>
 	                                                </div>
 	                                            </li>
                                         	<? endforeach; ?>
