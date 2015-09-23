@@ -39,7 +39,7 @@ $(function() {
 		var actionButtonDiv = $("<div>").attr({"class": "pull-right action-buttons"});
 
 		var editComment = $("<a>").attr({"id": "editComment-" + comment_id}).append($("<span>").attr({"class": "glyphicon glyphicon-pencil"}));
-		var deleteComment = $("<a>").attr({"id": "deleteComment-" + comment_id, "class": "trash"}).append($("<span>").attr({"class": "glyphicon glyphicon-trash"}));
+		var deleteComment = $("<a>").attr({"id": "deleteComment-" + comment_id, "class": "comment-trash trash"}).append($("<span>").attr({"class": "glyphicon glyphicon-trash"}));
 		actionButtonDiv.append(editComment).append(deleteComment);
 
 		var authorSpan = $("<span>").attr({"class": "date sub-text"}).text("By " + comment["user_id"] + " on " + comment["created_date"]);
@@ -67,7 +67,7 @@ $(function() {
 
 		var postActionDiv = $("<div>").attr({"class": "pull-right action-buttons", "id": "action-buttons-" + post_id});
 		var editList = $("<a>").attr({"id": "editList-" + post_id}).append($("<span>").attr({"class": "glyphicon glyphicon-pencil"}));
-		var deleteList = $("<a>").attr({"id": "deleteList-" + post_id, "class": "trash"}).append($("<span>").attr({"class": "glyphicon glyphicon-trash"}));
+		var deleteList = $("<a>").attr({"id": "deleteList-" + post_id, "class": "post-trash trash"}).append($("<span>").attr({"class": "glyphicon glyphicon-trash"}));
 		var markList = $("<a>").attr({"id": "markList-" + post_id, "class": "flag"}).append($("<span>").attr({"class": "glyphicon glyphicon-ok"}));
 		postActionDiv.append(editList).append(deleteList).append(markList);
 		rootLi.append(postActionDiv);
@@ -87,6 +87,61 @@ $(function() {
 	}
 
 	function failedPost(xhr, status, exception) {
+		console.log(xhr, status, exception);
+	}
+	
+
+	$(document).ready(function() {
+		$("body").on("click", ".post-trash", function() {
+			if (confirm("Are you sure?")) {
+				var deleteId = this.id.split("-")[1];
+				$.post("deletepost.php", {
+					"postId" : deleteId
+				}).done(function(data, staus, xhr) {
+					successfulPostDelete(data, status, xhr, deleteId);
+				}).fail(failedPostDelete);
+			}
+		});
+	});
+
+
+  function successfulPostDelete(data, status, xhr, deleteId) {
+		if (data === "1") {
+//			alert("Successfully deleted");
+//			$(this).fadeOut(500, function() { $("#" + deleteId).remove(); });
+			$("#" + deleteId).remove();
+		} else
+			alert("Cannot delete");
+	}
+
+	function failedPostDelete(xhr, status, exception) {
+		console.log(xhr, status, exception);
+	}
+	
+	$(document).ready(function() {
+		$("body").on("click", ".comment-trash", function() {
+			if (confirm("Are you sure?")) {
+				var deleteId = this.id.split("-")[1];
+				$.post("deletecomment.php", {
+					"commentId" : deleteId
+				}).done(function(data, staus, xhr) {
+					successfulCommentDelete(data, status, xhr, deleteId);
+				}).fail(failedCommentDelete);
+			}
+		});
+	});
+
+
+	  function successfulCommentDelete(data, status, xhr, deleteId) {
+		if (data === "1") {
+//			alert("Successfully deleted");
+			// $(this).fadeOut(500, function() { $("#" + deleteId).remove(); });
+			$("#commentText-" + deleteId).remove();
+		} else
+			alert("Cannot delete");
+	}
+
+	function failedCommentDelete(xhr, status, exception) {
 		console.log(xhr, status, exception);
 	}
 });
