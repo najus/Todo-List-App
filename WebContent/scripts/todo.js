@@ -5,10 +5,13 @@ $(function() {
 		$("body").on("click", "#btnSaveTodo", function() {
 			var postData = $("#txtNewTodo").val();
 			$("#txtNewTodo").val("");
-			$.post("addpost.php", {
-				"newpost" : postData,
-				"dataType" : "json"
-			}).done(successfulPost).fail(failedPost);
+
+			if (postData) {
+				$.post("addpost.php", {
+					"newpost" : postData,
+					"dataType" : "json"
+				}).done(successfulPost).fail(failedPost);
+			}
 		});
 	});
 
@@ -17,12 +20,14 @@ $(function() {
 			var inputCommentId = this.id.split("-")[1];
 			var postComment = $("#form-control-" + inputCommentId).val();
 			$("#form-control-" + inputCommentId).val("");
-			
-			$.post("addcomment.php", {
-				"newcomment" : postComment,
-				"postid" : inputCommentId,
-				"dataType" : "json"
-			}).done(successfulComment).fail(failedComment);
+						
+			if (postComment) {
+				$.post("addcomment.php", {
+					"newcomment" : postComment,
+					"postid" : inputCommentId,
+					"dataType" : "json"
+				}).done(successfulComment).fail(failedComment);
+			}
 		});
 	});
 	
