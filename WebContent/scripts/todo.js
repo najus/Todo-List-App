@@ -3,7 +3,7 @@ $(function() {
 
 	$(document).ready(function() {
 		$("body").on("click", "#btnSaveTodo", function() {
-			var postData = $("#txtNewTodo").val();
+			var postData = $.trim($("#txtNewTodo").val());
 			$("#txtNewTodo").val("");
 
 			if (postData) {
@@ -18,7 +18,7 @@ $(function() {
 	$(document).ready(function() {
 		$("body").on("click", ".btn-success", function() {
 			var inputCommentId = this.id.split("-")[1];
-			var postComment = $("#form-control-" + inputCommentId).val();
+			var postComment = $.trim($("#form-control-" + inputCommentId).val());
 			$("#form-control-" + inputCommentId).val("");
 						
 			if (postComment) {
