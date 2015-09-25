@@ -1,16 +1,16 @@
 <?php
-session_start ();
+session_start();
 require ("posts.php");
 
-if (isset ( $_SESSION ['username'] )) {
+if (isset ($_SESSION ['username'])){
 	$username = $_SESSION ['username'];
 	$user_id = $_SESSION ['user_id'];
 	
 	$posts = getAllPosts();
-} else {
+}else{
 	$_SESSION ['error'] = "Please login first";
 	header ( "Location: index.php" );
-	exit ();
+	exit();
 }
 ?>
 
@@ -103,7 +103,7 @@ and open the template in the editor.
 											</div>
 	                                    </div>
                                         <ul class="commentList" id="commentList-<?= $post["item_id"] ?>">
-                                        	<? $comments = getAllComments($post["item_id"]); foreach ($comments as $comment): ?>
+                                        	<?php $comments = getAllComments($post["item_id"]); foreach ($comments as $comment): ?>
 	                                            <li id="commentLi-<?= $comment["comment_id"]?>">
 	                                                <div class="commentText" id="commentText-<?= $comment["comment_id"]?>">
 	                                                    <p class=""><?= $comment["comment_text"] ?></p> 
@@ -114,7 +114,7 @@ and open the template in the editor.
 	                                                    <span class="date sub-text">By <?= getUser($comment["user_id"]) ?> on <?= $comment["created_date"] ?></span>
 	                                                </div>
 	                                            </li>
-                                        	<? endforeach; ?>
+                                        	<?php endforeach; ?>
                                         </ul>
                                         <div class="form-inline">
                                             <div class="form-group">
@@ -126,13 +126,12 @@ and open the template in the editor.
                                         </div>
                                     </div>
                                 </li>
-                            <? endforeach; ?>
+                            <?php endforeach; ?>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </body>
 </html>
