@@ -1,7 +1,7 @@
 <?php
 session_start ();
 require ("top.html");
-require ("db-connection.php");
+// require ("db-connection.php");
 $error = null;
 if (isset ( $_SESSION ['error'] )) {
 	$error = $_SESSION ['error'];

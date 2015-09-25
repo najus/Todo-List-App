@@ -32,14 +32,15 @@ function getUserPost($user_id) {
 	
 	return $posts;
 }
-function updatePost($post_id, $updated_post, $user_id) {
+function editPost($post_id, $edited_post, $user_id) {
 	global $db;
-	$stmt_post = $db->prepare ( "UPDATE todolist SET item_text = :updated_post WHERE user_id = :user_id AND item_id = :post_id" );
+	$stmt_post = $db->prepare ( "UPDATE todolist SET item_text = :edited_post WHERE user_id = :user_id AND item_id = :post_id" );
 	$stmt_post->execute ( array (
-			':item_text' => $updated_post,
+			':edited_text' => $edited_post,
 			':user_id' => $user_id,
 			':item_id' => $post_id 
 	) );
+	return $stmt_post->rowCount();
 }
 function updateComment($comment_id, $updated_comment, $user_id) {
 	global $db;

@@ -86,8 +86,9 @@ $(function() {
 		var commentP = $("<p>").attr({"class": ""}).text(comment["comment_text"]);
 		var actionButtonDiv = $("<div>").attr({"class": "pull-right action-buttons"});
 
+		var editComment = $("<a>").attr({"id": "editComment-" + comment_id}).append($("<span>").attr({"class": "glyphicon glyphicon-pencil"}));
 		var deleteComment = $("<a>").attr({"id": "deleteComment-" + comment_id, "class": "comment-trash trash"}).append($("<span>").attr({"class": "glyphicon glyphicon-trash"}));
-		actionButtonDiv.append(deleteComment);
+		actionButtonDiv.append(editComment).append(deleteComment);
 
 		var authorSpan = $("<span>").attr({"class": "date sub-text"});
 				
@@ -131,9 +132,10 @@ $(function() {
 		
 
 		var postActionDiv = $("<div>").attr({"class": "pull-right action-buttons", "id": "action-buttons-" + post_id});
+		var editList = $("<a>").attr({"id": "editList-" + post_id}).append($("<span>").attr({"class": "glyphicon glyphicon-pencil"}));
 		var deleteList = $("<a>").attr({"id": "deleteList-" + post_id, "class": "post-trash trash"}).append($("<span>").attr({"class": "glyphicon glyphicon-trash"}));
 		var markList = $("<a>").attr({"id": "markList-" + post_id, "class": "flag"}).append($("<span>").attr({"class": "glyphicon glyphicon-ok"}));
-		postActionDiv.append(deleteList).append(markList);
+		postActionDiv.append(editList).append(deleteList).append(markList);
 		rootLi.append(postActionDiv);
 
 		var actionBoxDiv = $("<div>").attr({"class": "actionBox", "id": "actionBox-" + post_id});
@@ -228,4 +230,41 @@ $(function() {
 	function failedDonePost(xhr, status, exception) {
 		console.log(xhr, status, exception);
 	}
+	
+
+	
+	$(document).ready(function() {
+		$(".edit-post").hide();
+		$(".comment-edit").hide();
+		$(".post-edit").hide();
+	});
+
+	/*
+	$(document).ready(function() {
+		$("body").on("click", ".post-edit", function() {
+			var postId = this.id.split("-")[1];
+			var post = $("#item-" + postId).text();
+			$("#edit-post-" + postId).show();
+			$("#edit-post-text-" + postId).val(post);
+
+			$("body").on("click", "#edit-post-btn-" + postId, function() {
+				$.post("editpost.php", {
+					"postId" : postId,
+					"post" : post
+				}).done(function(data, staus, xhr) {
+					editPost(data, staus, xhr, postId)
+				}).fail(failedPost);
+			});
+		});
+	});
+	
+	function editPost(data, staus, xhr, postId) {
+		if (data === "1") {
+			$("#edit-post-" + postId).hide();
+			$("#item-" + postId).text($("#edit-post-text-" + postId).val());
+		} else {
+			alert("Cannot edit the post.");
+		}
+	}
+	*/
 });

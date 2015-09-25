@@ -31,7 +31,7 @@ and open the template in the editor.
 		</div>
 		<div class="row">
 			<div class="col-lg-12">
-				<form action="register.php" method="POST">
+				<form action="signup-submit.php" method="POST">
 					<fieldset>
 						<legend> New User Sign up: </legend>
 						<?php if ($error): ?>
@@ -43,19 +43,19 @@ and open the template in the editor.
 							<div class="col-md-4 col-md-offset-4">
 								<p>
 									<strong>Username: </strong><input type="text" name="name"
-										maxlength="16" />
+										maxlength="50" />
 								</p>
 								<p>
 									<strong>E-mail: </strong><input type="email" name="email"
-										maxlength="16" />
+										maxlength="50" />
 								</p>
 								<p>
 									<strong>Password: </strong><input type="password"
-										name="password" maxlength="16" />
+										name="password" maxlength="50" />
 								</p>
 								<p>
 									<strong>Confirm: </strong><input type="password"
-										name="confirmpassword" maxlength="16" />
+										name="confirmpassword" maxlength="50" />
 								</p>
 								<p>
 									<input type="submit" class="btn btn-success" value="Sign Up" />

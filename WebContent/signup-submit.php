@@ -17,6 +17,8 @@ if (empty ( $username ) || empty ( $password ) || empty ( $confirmpassword ) || 
 	header ( "Location: signup.php" );
 	exit ();
 }
+
+$pass_hash = password_hash($password, PASSWORD_DEFAULT);
 try {
 	$selectStmnt = $db->prepare ( "SELECT username FROM users WHERE username= :username" );
 	$selectStmnt->execute ( array (
@@ -30,7 +32,7 @@ try {
 		$stmt = $db->prepare ( "INSERT INTO users values(NULL, :name, :pass, :email, :createddate)" );
 		$stmt->execute ( array (
 				':name' => $username,
-				':pass' => $password,
+				':pass' => $pass_hash,
 				':email' => $email,
 				':createddate' => $currentDate 
 		) );

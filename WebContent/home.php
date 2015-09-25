@@ -12,53 +12,127 @@ if (isset ( $_SESSION ['username'] )) {
 	header ( "Location: index.php" );
 	exit ();
 }
-require ("top.html");
 ?>
-<div class="container text-center pagination-centered">
-	<div class="col-lg-12">
-		<h1>Todo list app</h1>
-	</div>
-</div>
-<div class="container text-center pagination-centered">
-	<div class="row">
-		<div class="col-lg-12">
-			<span> New post: </span><input class="new-post add-post-height"
-				id="newpost" type="text" />
-			<button id="submit-post" class="btn-primary add-post-height">+ Add</button>
-		</div>
-	</div>
-	<div id="posts">
-	<?php foreach ($posts as $post):?>
-		<div class="row posts">
-			<div class="col-lg-12 <?php
-			
-			if ($user_id === $post ['user_id']) {
-				echo "admin";
-			} else {
-				echo "user";
-			}
-			?>" id="post-<?= $post['item_id'] ?>"><?php echo ($post['item_text']);
-			$comments = getAllComments($post['item_id']);
-			foreach ($comments as $comment):
-			?>
-			<div class="row comments">
-				<div class="col-lg-6 <?php
-			
-			if ($user_id === $post ['user_id']) {
-				echo "admin";
-			} else {
-				echo "user";
-			}
-			?>" id="comment-<?= $comment['comment_id'] ?>"><?= $comment['comment_text'] ?></div>
-			</div>
-			<?php endforeach;?>
-			<input id="new-comment-<?= $post['item_id'] ?>" type="text" /><button class="btn-primary add-post-height btn-comment" id="<?= $post['item_id'] ?>">+ Comment</button>
-			</div>
-		</div>
-	<?php endforeach;?>
-	</div>
-</div>
 
-<?php
-require ("bottom.html");
-?>
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="bootstrap/listgroup.css" rel="stylesheet" type="text/css"/>
+        <script src="scripts/jquery-2.1.4.min.js" type="text/javascript"></script>
+        <script src="bootstrap/js/bootstrap.js" type="text/javascript"></script>
+        <script src="scripts/todo.js" type="text/javascript"></script>
+    </head>
+    <body>
+    	<div class="container text-center pagination-centered">
+			<div class="col-lg-12">
+				<h1>Todo List App</h1>
+				<h2>
+					<span class="col-lg-offset-0"><?= $username ?></span>
+					<span class="col-lg-offset-8"><a href="logout.php">Logout</a></span>
+				</h2>
+			</div>
+		</div>
+        <div class="container">
+            <div class="row form-group">
+                <div class="col-md-10 col-lg-offset-1">
+                    <div class="panel panel-primary">
+                        <!-- Default panel contents -->
+                        <div class="panel-heading">Add Todo</div>
+                        <div class="panel-body">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Your Todo.." id="txtNewTodo">
+
+                                <span class="input-group-addon success" id="btnSaveTodo">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </span>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-4">
+                    <div class="col-md-4">
+                        <div class="btn-group btn-group-justified" role="group" aria-label="...">
+                            <div class="btn-group" role="group">
+                                <button id="btnAllList" type="button" class="btn btn-default active">All</button>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <button id="btnMyList" type="button" class="btn btn-default">My Todo</button>
+                            </div></div>
+                    </div></div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-md-10 col-lg-offset-1">
+                    <hr class="hr-primary" />
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <span class="glyphicon glyphicon-list"></span>Todo Lists
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                            <?php foreach($posts as $post): ?>
+                                <li class="list-group-item titleBox" id="<?= $post["item_id"] ?>">                            
+                                    <label id="item-<?= $post["item_id"] ?>"><?= $post["item_text"] ?></label>
+                                    <div class="pull-right action-buttons" id="action-buttons-<?= $post["item_text"] ?>">
+										<a id="editList-<?= $post["item_id"] ?>" class="post-edit"><span class="glyphicon glyphicon-pencil"></span></a>
+                                        <a id="deleteList-<?= $post["item_id"] ?>" class="post-trash trash"><span class="glyphicon glyphicon-trash"></span></a>
+                                        <a id="markList-<?= $post["item_id"] ?>" class="flag"><span class="glyphicon glyphicon-ok"></span></a>
+                                    </div>
+                                    <div class="actionBox" id="actionBox-<?= $post["item_id"] ?>">
+	                                    <div class="form-inline edit-post" id="edit-post-<?= $post["item_id"] ?>">
+											<div class="form-group">
+												<input class="form-control" id="edit-post-text-<?= $post["item_id"] ?>" type="text" />
+										 	</div>
+											<div class="form-group">
+												<button class="btn btn-success" id="edit-post-btn-<?= $post["item_id"] ?>">Edit</button>
+											</div>
+	                                    </div>
+                                        <ul class="commentList" id="commentList-<?= $post["item_id"] ?>">
+                                        	<? $comments = getAllComments($post["item_id"]); foreach ($comments as $comment): ?>
+	                                            <li id="commentLi-<?= $comment["comment_id"]?>">
+	                                                <div class="commentText" id="commentText-<?= $comment["comment_id"]?>">
+	                                                    <p class=""><?= $comment["comment_text"] ?></p> 
+	                                                    <div class="pull-right action-buttons">
+															<a id="editComment-<?= $comment["comment_id"]?>" class="comment-edit"><span class="glyphicon glyphicon-pencil"></span></a>
+	                                                        <a id="deleteComment-<?= $comment["comment_id"]?>" class="comment-trash trash"><span class="glyphicon glyphicon-trash"></span></a>
+	                                                    </div>
+	                                                    <span class="date sub-text">By <?= getUser($comment["user_id"]) ?> on <?= $comment["created_date"] ?></span>
+	                                                </div>
+	                                            </li>
+                                        	<? endforeach; ?>
+                                        </ul>
+                                        <div class="form-inline">
+                                            <div class="form-group">
+                                                <input class="form-control" id="form-control-<?= $post["item_id"] ?>" type="text" placeholder="Your comments" />
+                                            </div>
+                                            <div class="form-group">
+                                                <button class="btn btn-success" id="btn-<?= $post["item_id"] ?>">Add</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            <? endforeach; ?>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
